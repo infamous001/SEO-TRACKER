@@ -7,7 +7,7 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
   return (
-    <header className="my-4 flex items-center justify-between">
+    <header className="my-4 w-full flex items-center justify-between">
       <a href="/" className="text-3xl font-bold bg-gradient-to-r to-blue-600 from-indigo-900 text-transparent bg-clip-text">
         RankTracker
       </a>
