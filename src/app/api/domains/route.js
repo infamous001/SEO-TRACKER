@@ -56,3 +56,12 @@ export async function GET(){
         await Domain.find({owner:session.user?.email})
     );
 }
+
+export async function DELETE(req){
+    await mongoose.connect(process.env.MONGODB_URI);
+    const url=new URL(req.url);
+    const domain=url.searchParams.get('domain');
+    const session = await getServerSession(authOptions);
+    await Domain.deleteOne({owner:session.user?.email,domain:domain});
+    return Response.json(true);
+}
