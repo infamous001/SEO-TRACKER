@@ -1,13 +1,17 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function DomainRow({owner,domain,icon}) {
   const keywords = ['github', 'git', 'source code','rohit','jindal',];
   return (
     <div className="flex items-center gap-14 bg-white border border-blue-200 border-b-4 p-4 rounded-lg my-4">
       <div className="flex items-center gap-2">
-      <img src={icon} className="h-12" />
+        
+      {icon &&(
+        <img src={icon} className="h-12"/>
+      )}
       <div>
-        <h2 className="font-bold text-xl leading-4">{domain}</h2>
+        <Link href={`/domains/${domain}`} className="font-bold text-xl leading-4 block">{domain}</Link>
         {keywords.map((keyword, index) => (
           <span
             key={index}
