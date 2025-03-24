@@ -24,3 +24,13 @@ export async function GET(req) {
   const session = await getServerSession(authOptions);
   return Response.json(await Keyword.find({domain,owner:session.user.email}));
 }
+
+export async function DELETE(req){
+  const url = new URL(req.url);
+  const domain = url.searchParams.get('domain');
+  const keyword = url.searchParams.get('keyword');
+  mongoose.connect(process.env.MONGODB_URI);
+  const session = await getServerSession(authOptions);
+  await Keyword.deleteOne({domain,keyword,owner:session.user.email});
+  return Response.json(true)
+}
