@@ -37,11 +37,14 @@ export default function keywordPage(props){
           });
     }
     return (
-        <div className='flex items-end'>
-                <DoubleHeader preTitle={domain} mainTitle={keyword} />
-                <div className='p-2'>
-                    <DeleteButton onClick={showDeletePopup}/>
-                </div>
+        <div>
+            <div className='flex items-end mb-8'>
+                    <DoubleHeader preTitle={domain} mainTitle={keyword} />
+                    <div className='p-2'>
+                        <DeleteButton onClick={showDeletePopup}/>
+                    </div>
+            </div>
+            <div className="bg-green-300 h-36"></div>
         </div>
     )
     

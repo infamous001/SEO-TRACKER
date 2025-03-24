@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function DomainRow({owner,domain,icon}) {
-  const keywords = ['github', 'git', 'source code','rohit','jindal',];
+export default function DomainRow({owner,domain,icon,keywords}) {
+  
   return (
     <div className="flex items-center gap-14 bg-white border border-blue-200 border-b-4 p-4 rounded-lg my-4">
       <div className="flex items-center gap-2">
@@ -12,12 +12,9 @@ export default function DomainRow({owner,domain,icon}) {
       )}
       <div>
         <Link href={`/domains/${domain}`} className="font-bold text-xl leading-4 block">{domain}</Link>
-        {keywords.map((keyword, index) => (
-          <span
-            key={index}
-            className="text-xs text-gray-500 bg-slate-100 rounded-md p-1 mt-1 mr-1 mb-1 inline-block"
-          >
-            {keyword}
+        {keywords.map(keywordDoc=> (
+          <span className="text-xs text-gray-500 bg-slate-100 rounded-md p-1 mt-1 mr-1 mb-1 inline-block">
+            {keywordDoc.keyword}
           </span>
         ))}
       </div>

@@ -1,5 +1,6 @@
 import { authOptions } from "../auth/[...nextauth]/route";
 import { Domain } from "@/models/Domain";
+import { Keyword } from "@/models/Keyword";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import axios from "axios";
@@ -49,12 +50,17 @@ export async function POST(req) {
     
     return Response.json(doc);
 }
-export async function GET(){
-    await mongoose.connect(process.env.MONGODB_URI);
+
+export async function GET() {
+    mongoose.connect(process.env.MONGODB_URI);
     const session = await getServerSession(authOptions);
-    return Response.json(
-        await Domain.find({owner:session.user?.email})
-    );
+    const email = session?.user?.email;
+    const domains = await Domain.find({ owner: email });
+    const keywords = await Keyword.find({ 
+        owner: email, 
+        domain: domains.map(doc=>doc.domain),
+    });
+    return Response.json({domains,keywords});
 }
 
 export async function DELETE(req){
