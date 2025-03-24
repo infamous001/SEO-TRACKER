@@ -13,9 +13,11 @@ export default function DomainRow({owner,domain,icon,keywords}) {
       <div>
         <Link href={`/domains/${domain}`} className="font-bold text-xl leading-4 block">{domain}</Link>
         {keywords.map(keywordDoc=> (
-          <span className="text-xs text-gray-500 bg-slate-100 rounded-md p-1 mt-1 mr-1 mb-1 inline-block">
+          <Link 
+          href={'/domains/'+domain+'/'+keywordDoc.keyword}
+          className="text-xs text-gray-500 bg-slate-100 rounded-md p-1 mt-1 mr-1 mb-1 inline-block">
             {keywordDoc.keyword}
-          </span>
+          </Link>
         ))}
       </div>
       </div>
