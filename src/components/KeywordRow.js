@@ -1,6 +1,9 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Chart from "./Chart";
+
+
 
 export default function KeywordRow({ keyword, owner, domain,results }) {
     const latestResult=results.reverse()[0]
@@ -26,15 +29,17 @@ export default function KeywordRow({ keyword, owner, domain,results }) {
     }
 
     return (
-        <div className="flex gap-2 bg-white border border-blue-200 border-b-4 p-4 rounded-lg items-center my-3">
+        <div className="flex gap-2 bg-white border border-blue-200 border-b-4 p-4 pr-0 rounded-lg items-center my-3">
             <Link className="font-bold grow block" href={'/domains/'+domain+'/'+encodeURIComponent(keyword)}>{keyword}</Link>
             <div>
-                <div className="bg-green-100 w-48 h-[64px]">
+                <div className="h-[64px] w-[300px]">
                     {!latestRank&&(
-                        <div>Checking..</div>
+                        <div>Checking...</div>
                     )}
                     {latestRank&&(
-                        <div>{latestRank}</div>
+                        <div>
+                            <Chart results={results} width={300}/>
+                        </div>
                     )}
                 </div>
             </div>
