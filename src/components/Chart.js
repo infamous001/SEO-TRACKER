@@ -9,8 +9,8 @@ export default function Chart({ width,results}) {
     const highestRank=sortBy(results,'rank')?.[0]?.rank;
     const domainLow=lowestRank+3;
     let data=results;
-    data=data.map(result=>({date:result.createdAt.substring(0,10),rank:result.rank,points:domainLow-result?.rank||null,}));
-    data=uniqBy(data,'date');
+    data=data.map(result=>({keyword:result.keyword,date:result.createdAt.substring(0,10),rank:result.rank,points:domainLow-result?.rank||null,}));
+    data=uniqBy(data,r=>r.keyword+r.date);
     data=sortBy(data,'date');
 
     return (
