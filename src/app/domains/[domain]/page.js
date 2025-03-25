@@ -17,6 +17,7 @@ export default function DomainPage(props) {
     const domain = params.domain;
     const [keywords,setKeywords]=useState([]);
     const[loading,setLoading]=useState(false)
+    const [results,setResults]=useState([]);
     const[showDelete,setShowDelete]=useState(false);
     useEffect(()=>{
         fetchKeywords()
@@ -25,7 +26,8 @@ export default function DomainPage(props) {
     function fetchKeywords(){
         setLoading(true);
         axios.get('/api/keywords?domain='+domain).then(response=>{
-            setKeywords(response.data);
+            setKeywords(response.data.keywords);
+            setResults(response.data.results);
             setLoading(false);
         });
     }
@@ -65,8 +67,8 @@ export default function DomainPage(props) {
             {loading && (
                 <div>loading...</div>
             )}
-            {!loading && keywords.map(keyword=>(
-                <KeywordRow {...keyword}/>
+            {!loading && keywords.map(keywordDoc=>(
+                <KeywordRow {...keywordDoc} results={results.filter(r=>r.keyword===keywordDoc.keyword)}/>
             ))}
         </div>
     )
