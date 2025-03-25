@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
+import Chart from './Chart';
 
-export default function DomainRow({owner,domain,icon,keywords}) {
+export default function DomainRow({owner,domain,icon,keywords,results}) {
   
   return (
     <div className="flex items-center gap-14 bg-white border border-blue-200 border-b-4 p-4 rounded-lg my-4">
@@ -22,7 +23,7 @@ export default function DomainRow({owner,domain,icon,keywords}) {
       </div>
       </div>
       <div>
-        <div className="bg-green-100 w-36 h-24"></div>
+        <Chart width={300} results={results}/>
       </div>
     </div>
   );

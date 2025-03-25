@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 
 export default function Home() {  
     const [domains,setDomains]=useState([]);
-    const [loading,setLoading]=useState(false);
     const [keywords,setKeywords]=useState([]);
+    const [results,setResults]=useState([]);
+    const [loading,setLoading]=useState(false);
     useEffect(()=>{
         fetchDomains();
     },[]);
@@ -16,6 +17,7 @@ export default function Home() {
         axios.get('/api/domains').then(res=>{
             setDomains(res.data.domains);
             setKeywords(res.data.keywords);
+            setResults(res.data.results);
             setLoading(false);
         });
     }
@@ -30,7 +32,9 @@ export default function Home() {
             }
             {
                 !loading &&(
-                    <DomainsList domains={domains} keywords={keywords}/>
+                    <div>
+                        <DomainsList domains={domains} keywords={keywords} results={results}/>
+                    </div>
                 )
             }
         </div>

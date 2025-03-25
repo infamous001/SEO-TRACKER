@@ -1,6 +1,7 @@
 import { authOptions } from "../auth/[...nextauth]/route";
 import { Domain } from "@/models/Domain";
 import { Keyword } from "@/models/Keyword";
+import { Result } from "@/models/Result";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import axios from "axios";
@@ -60,7 +61,11 @@ export async function GET() {
         owner: email, 
         domain: domains.map(doc=>doc.domain),
     });
-    return Response.json({domains,keywords});
+    const results=await Result.find({
+      domain:domains.map(doc => doc.domain),
+      keyword:keywords.map(doc=>doc.keyword)
+    });
+    return Response.json({domains,keywords,results});
 }
 
 export async function DELETE(req){

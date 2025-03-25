@@ -2,12 +2,14 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from "recharts";
 import {sortBy, uniqBy} from "lodash";
 
 
-export default function Chart({ results, width }) {
+export default function Chart({ width,results}) {
+    {console.log("hello")}
+    {console.log(results)}
     const lowestRank=sortBy(results,'rank').reverse()?.[0].rank;
     const highestRank=sortBy(results,'rank')?.[0]?.rank;
     const domainLow=lowestRank+3;
     let data=results;
-    data=data.map(result=>({date:result.createdAt.substring(0,10),rank:result.rank,points:domainLow-result.rank,}));
+    data=data.map(result=>({date:result.createdAt.substring(0,10),rank:result.rank,points:domainLow-result?.rank||null,}));
     data=uniqBy(data,'date');
     data=sortBy(data,'date');
 
