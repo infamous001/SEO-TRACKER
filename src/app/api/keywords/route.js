@@ -1,5 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { doGoogleSearch } from "@/libs/rankingFunctions";
 import { Keyword } from "@/models/Keyword";
+import { Result } from "@/models/Result";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -12,6 +14,12 @@ export async function POST(req) {
     domain: data.domain,
     keyword: data.keyword,
     owner: session.user.email,
+  });
+  const responseId=await doGoogleSearch(data.keyword);
+  await Result.create({
+    domain: data.domain,
+    keyword: data.keyword,
+    brightDataResponseId:responseId,
   });
   return Response.json(keywordDoc);
 }
