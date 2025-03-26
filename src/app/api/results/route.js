@@ -10,8 +10,8 @@ export async function POST(req){
   mongoose.connect(process.env.MONGODB_URI);
   const data=await req.json();
   const response_id=data.response_id;
-  const url='https://api.brightdata.com/serp/get_result?output=json&customer=hl_4edc76c5&zone=ranktracker&response_id=' + response_id;
-  const headers= {'Authorization': 'Bearer 17e97686-3800-4b5b-8399-c88bb1d8ad65'};
+  const url='https://api.brightdata.com/serp/get_result?customer=hl_e6e55402&zone=rank_tracker&response_id=' + response_id;
+  const headers= {'Authorization': 'Bearer e22723aa-ea43-4e45-a5a9-5304920efb32'};
   const response=await axios.get(url,{headers})
   const ourResultDoc=await Result.findOne({
     brightDataResponseId:response_id,
