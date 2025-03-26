@@ -11,6 +11,7 @@ export const authOptions={
         })
       ],
       adapter: MongoDBAdapter(clientPromise),
+      secret:process.env.SECRET,
 };
 
 const handler = NextAuth(authOptions)
