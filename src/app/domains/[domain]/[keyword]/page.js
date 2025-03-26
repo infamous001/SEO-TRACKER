@@ -5,12 +5,19 @@ import { useParams ,redirect} from "next/navigation"
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import withReactContent from 'sweetalert2-react-content';
+import { useState,useEffect } from "react";
+import Chart from "@/components/Chart";
 const MySwal=withReactContent(Swal);
 
 export default function keywordPage(props){
     const params=useParams()
     const keyword=decodeURIComponent(params.keyword);
-    const domain=params.domain
+    const domain=params.domain;
+    const [results,setResults] = useState([]);
+    useEffect(() => {
+      axios.get('/api/keywords?keyword='+keyword+'&domain='+domain)
+        .then(response => setResults(response.data.results));
+    }, []);
 
     function deleteKeyword(){
         axios.delete('/api/keywords?domain='+domain+'&keyword='+keyword).then(()=>{
@@ -44,7 +51,11 @@ export default function keywordPage(props){
                         <DeleteButton onClick={showDeletePopup}/>
                     </div>
             </div>
-            <div className="bg-green-300 h-36"></div>
+            {results.length>0&&(
+            <div>
+                <Chart width={'100%'} results={results}/>
+            </div>
+            )}
         </div>
     )
     

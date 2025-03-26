@@ -30,14 +30,18 @@ export async function GET(req) {
   const keyword = url.searchParams.get('keyword');
   mongoose.connect(process.env.MONGODB_URI);
   const session = await getServerSession(authOptions);
-  const keywordsDocs= await Keyword.find({domain,owner:session.user.email});
-  const resultsDocs=await Result.find({
+  const keywordsDocs = await Keyword.find(
+    keyword
+      ? {domain,keyword,owner:session.user.email}
+      : {domain,owner:session.user.email}
+  );
+  const resultsDocs = await Result.find({
     domain,
-    keyword:keywordsDocs.map(doc=>doc.keyword)
+    keyword:keywordsDocs.map(doc => doc.keyword)
   });
   return Response.json({
-    keywords:keywordsDocs,
-    results:resultsDocs,
+    keywords: keywordsDocs,
+    results: resultsDocs,
   });
 }
 
