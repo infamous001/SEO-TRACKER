@@ -16,13 +16,15 @@ export async function POST(req){
   const ourResultDoc=await Result.findOne({
     brightDataResponseId:response_id,
   });
-  const domain=ourResultDoc.domain;
-  const keyword=ourResultDoc.keyword;
-  const rank=response?.data?.organic?.find(result=>result.link.includes(domain))?.rank;
-  if (rank){
-    ourResultDoc.rank=rank;
-    console.log(`rank${rank} keyword${keyword} domain${domain}`)
-    await ourResultDoc.save();
+  if(ourResultDoc){
+    const domain=ourResultDoc.domain;
+    const keyword=ourResultDoc.keyword;
+    const rank=response?.data?.organic?.find(result=>result.link.includes(domain))?.rank;
+    if (rank){
+      ourResultDoc.rank=rank;
+      console.log(`rank${rank} keyword${keyword} domain${domain}`)
+      await ourResultDoc.save();
+    }
   }
   return  Response.json(true)
 }
