@@ -3,6 +3,10 @@ import {sortBy, sumBy, uniqBy} from "lodash";
 
 
 export default function Chart({ width,results}) {
+    results=(results||[])?.filter(r=>r.rank);
+    if(!results.length){
+      return '';
+    }
     const lowestRank=sortBy(results,'rank').reverse()?.[0]?.rank;
     const highestRank=sortBy(results,'rank')?.[0]?.rank;
     const domainLow=lowestRank+3;

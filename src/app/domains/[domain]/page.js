@@ -63,12 +63,12 @@ export default function DomainPage(props) {
                     <DeleteButton onClick={showDeletePopup}/>
                 </div>
             </div>
-            <NewKeywordForm domain={domain} onNew={fetchKeywords} />
+            <NewKeywordForm domain={domain} onNew={fetchKeywords} onSavingStarted={()=>setLoading(true)}/>
             {loading && (
                 <div>loading...</div>
             )}
             {!loading && keywords.map(keywordDoc=>(
-                <KeywordRow {...keywordDoc} results={results.filter(r=>r.keyword===keywordDoc.keyword)}/>
+                <KeywordRow key={keywordDoc._id} {...keywordDoc} results={results.filter(r=>r.keyword===keywordDoc.keyword)}/>
             ))}
         </div>
     )

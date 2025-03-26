@@ -3,7 +3,8 @@ const axios= require("axios");
 export async function doGoogleSearch(keyword) {
   const data = { 
     'country': 'us', 
-    'query': { 'q': keyword ,"brd_json":1} 
+    'query': { 'q': keyword ,"brd_json":1,num:100},
+    num:100 
   };
   
   const url = 'https://api.brightdata.com/serp/req?customer=hl_e6e55402&zone=rank_tracker';
@@ -18,7 +19,6 @@ export async function doGoogleSearch(keyword) {
     console.error(data);
     return null;
   } else {
-    console.log('responseId:'+response?.headers.get('x-response-id'));
     return response?.headers.get('x-response-id');
   }
 }

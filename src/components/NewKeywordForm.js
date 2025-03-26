@@ -2,9 +2,10 @@
 import axios from "axios";
 import {useState} from "react";
 
-export default function NewKeywordForm({onNew,domain}) {
+export default function NewKeywordForm({onNew,domain,onSavingStarted}) {
   const [keyword,setKeyword] = useState('');
   async function handleSubmit(ev) {
+    onSavingStarted();
     ev.preventDefault();
     setKeyword('');
     await axios.post('/api/keywords', {keyword,domain});

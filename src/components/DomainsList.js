@@ -11,6 +11,7 @@ export default function DomainsList({domains,keywords,results}){
             {domains.map(domainDoc => (
                 // <DomainRow domain={domain.domain} owner={domain.owner} icon={domain.icon} />
                 <DomainRow 
+                key={domainDoc._id}
                 {...domainDoc} 
                 keywords={keywords.filter(k=>k.domain===domainDoc.domain)}
                 results={results.filter(r=>r.domain==domainDoc.domain)}

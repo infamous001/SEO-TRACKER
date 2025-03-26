@@ -20,11 +20,11 @@ export async function POST(req){
     const domain=ourResultDoc.domain;
     const keyword=ourResultDoc.keyword;
     const rank=response?.data?.organic?.find(result=>result.link.includes(domain))?.rank;
+    ourResultDoc.complete=true;
     if (rank){
       ourResultDoc.rank=rank;
-      console.log(`rank${rank} keyword${keyword} domain${domain}`)
-      await ourResultDoc.save();
     }
+    await ourResultDoc.save();
   }
   return  Response.json(true)
 }
@@ -33,7 +33,16 @@ export async function GET(req){
   mongoose.connect(process.env.MONGODB_URI);
   const url=new URL(req.url);
   const id=url.searchParams.get('id');
-  return Response.json(
-    await Result.findOne({brightDataResponseId:id}),
-  );
+  const domain=url.searchParams.get('domain');
+  const keyword=url.searchParams.get('keyword');
+  if(id){
+    return Response.json(
+      await Result.findOne({brightDataResponseId:id}),
+    );
+  }
+  if(domain && keyword){
+    return Response.json(
+      await Result.find({domain,keyword})
+    );
+  }
 }
