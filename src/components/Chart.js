@@ -1,5 +1,5 @@
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from "recharts";
-import {sortBy, uniqBy} from "lodash";
+import {sortBy, sumBy, uniqBy} from "lodash";
 
 
 export default function Chart({ width,results}) {
@@ -10,7 +10,15 @@ export default function Chart({ width,results}) {
     const domainLow=lowestRank+3;
     let data=results;
     data=data.map(result=>({keyword:result.keyword,date:result.createdAt.substring(0,10),rank:result.rank,points:domainLow-result?.rank||null,}));
+    const originalData=[...data];
     data=uniqBy(data,r=>r.keyword+r.date);
+    data.forEach((result,index)=>{
+        const originalDataResults=originalData.filter(oResult=>oResult.date===result.date);
+        if(originalDataResults.length>1){
+            data[index]['points']=sumBy(originalDataResults,'points')/originalDataResults.length;
+            data[index]['rank']=sumBy(originalDataResults,'rank')/originalDataResults.length;
+        }
+    });
     data=sortBy(data,'date');
 
     return (
